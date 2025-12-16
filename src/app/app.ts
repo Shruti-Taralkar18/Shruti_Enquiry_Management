@@ -1,12 +1,25 @@
 import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  standalone: true,
+  imports: [RouterOutlet, CommonModule,RouterLink,RouterLinkActive],
   templateUrl: './app.html',
-  styleUrl: './app.css'
+  styleUrls: ['./app.css']
 })
 export class App {
-  protected readonly title = signal('Enquiry_Management');
+   title = signal('Enquiry_Management');
+
+   loggedIn = signal(false);
+   username = signal('John Doe');
+
+  login(){
+    this.loggedIn.set(true);
+  }
+
+  logoff(){
+    this.loggedIn.set(false);
+  }
 }
