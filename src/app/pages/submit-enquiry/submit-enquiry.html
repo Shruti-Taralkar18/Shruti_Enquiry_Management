@@ -1,0 +1,127 @@
+<div class="container-fluid py-4 parent">
+
+  <!-- Header -->
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h3 class="m-0">Enquiry Form</h3>
+  </div>
+
+  <form id="enquiryForm" class="needs-validation" novalidate>
+
+    <!-- 1. Customer Details -->
+    <div class="card card-section">
+      <div class="card-body">
+        <h5 class="card-title">1. Customer Details</h5>
+
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label">Customer Name</label>
+            <input type="text" class="form-control" [(ngModel)]="newEnquiryObj.customerName" name="customerName" required>
+            <div class="invalid-feedback">Please enter customer name.</div>
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label">Email</label>
+            <input type="email" class="form-control" [(ngModel)]="newEnquiryObj.customerEmail" name="customerEmail" required>
+            <div class="invalid-feedback">Please enter valid email.</div>
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label">Phone</label>
+            <div class="input-group">
+              <span class="input-group-text">+91</span>
+              <input type="tel" class="form-control" [(ngModel)]="newEnquiryObj.customerPhone" name="customerPhone" required>
+            </div>
+            <div class="form-text small-muted">10 digits only</div>
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label">Enquiry Type</label>
+            <input type="text" class="form-control" [(ngModel)]="newEnquiryObj.enquiryType" name="enquiryType" placeholder="Call / Walk-in / Online" disabled>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. Enquiry Details -->
+    <div class="card card-section">
+      <div class="card-body">
+        <h5 class="card-title">2. Enquiry Details</h5>
+
+        <div class="row g-3">
+          <div class="col-12">
+            <label class="form-label">Message</label>
+            <textarea class="form-control" name="message" rows="3" maxlength="500" required [(ngModel)]="newEnquiryObj.message"></textarea>
+            <div class="d-flex justify-content-between mt-1">
+              <span class="small-muted">Max 500 characters</span>
+              <span class="char-count">{{ (newEnquiryObj.message || '').length }} / 500</span>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label">Category</label>
+            <select class="form-select" name="categoryId" required [(ngModel)]="newEnquiryObj.categoryId">
+              <option value="" disabled>Select category</option>
+              <option *ngFor="let item of categoryList" [value]="item.categoryId">{{ item.categoryName }}</option>
+            </select>
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label">Status</label>
+            <select class="form-select" name="statusId" required [(ngModel)]="newEnquiryObj.statusId">
+              <option value="" disabled>Select status</option>
+              <option *ngFor="let item of statusList" [value]="item.statusId">{{ item.statusName }}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. Dates -->
+    <div class="card card-section">
+      <div class="card-body">
+        <h5 class="card-title">3. Dates</h5>
+
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label">Enquiry Date</label>
+            <input type="datetime-local" class="form-control" name="enquiryDate" [(ngModel)]="newEnquiryObj.enquiryDate">
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label">Follow-up Date</label>
+            <input type="datetime-local" class="form-control" name="followUpDate" [(ngModel)]="newEnquiryObj.followUpDate">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. Feedback -->
+    <div class="card card-section">
+      <div class="card-body">
+        <h5 class="card-title">4. Feedback & Notes</h5>
+
+        <div class="mb-3">
+          <label class="form-label">Internal Feedback</label>
+          <textarea class="form-control" name="feedback" rows="2" [(ngModel)]="newEnquiryObj.feedback"></textarea>
+          <div class="form-text small-muted">Internal use only</div>
+        </div>
+
+        <div class="form-check form-switch">
+          <input class="form-check-input" type="checkbox" name="isConverted" [(ngModel)]="newEnquiryObj.isConverted">
+          <label class="form-check-label">Converted to Customer</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- ACTION BUTTONS -->
+    <div class="form-actions">
+      <div class="d-flex justify-content-center gap-3">
+        <button type="button" class="btn btn-outline-secondary">Save Draft</button>
+        <button type="button" (click)="onSaveEnquiry()" class="btn btn-success">Save Enquiry</button>
+      </div>
+    </div>
+
+  </form>
+
+  <footer class="text-muted mt-3 small text-center">Enquiry Management System</footer>
+</div>
