@@ -1,1 +1,91 @@
-<p>enquiry-list works!</p>
+
+<div class="container-fluid parent">
+<div class="mt-3">
+
+  <h3 class="fw-bold mb-1">Enquiry Management</h3>
+  <p class="text-muted mb-4">View and manage all customer enquiries</p>
+</div>
+  <div class="row g-4">
+
+    @for (item of enquiryList; track $index) {
+        <div class="col-md-3">
+      <div class="enquiry-card">
+
+        <div class="card-top bg-primary">
+          <span class="status-badge bg-success">{{item.statusId}}</span>
+        </div>
+
+        <div class="card-body">
+
+          <h6 class="fw-bold mb-2">
+            <i class="bi bi-person-circle me-2"></i>
+            {{item.customerName}}
+          </h6>
+
+          <!-- <p class="small text-muted mb-1">
+            <i class="bi bi-envelope me-2"></i> admin@gmail
+          </p> -->
+
+          <p class="small text-muted mb-2">
+            <i class="bi bi-telephone me-2"></i> {{item.customerPhone}}
+          </p>
+
+        
+          <div class="message-box">
+            <div class="fw-semibold text-uppercase small">
+              ádsasadsadsad
+            </div>
+            <div class="text-muted small">
+              ádsadsadsadsa
+            </div>
+          </div>
+
+          <!-- NOTE -->
+          <div class="note-box">
+            <i class="bi bi-chat-left-text me-1"></i>
+            Please follow up soon
+          </div>
+
+          <!-- DATES -->
+          <div class="row date-row">
+            <div class="col-6">
+              <div class="label">ENQUIRY DATE</div>
+              <div class="value">{{item.enquiryDate | date:'dd-MMM-yy'}}</div>
+              <div class="time">06:25 AM</div>
+            </div>
+            <!-- <div class="col-6">
+              <div class="label">FOLLOW UP</div>
+              <div class="value">Dec 21, 2025</div>
+              <div class="time">06:25 AM</div>
+            </div> -->
+          </div>
+
+        </div>
+
+        <!-- FOOTER -->
+        <div class="card-footer d-flex justify-content-between align-items-center">
+
+          <span class="badge rounded-pill bg-light text-secondary">
+            Not Converted
+          </span>
+
+          <div>
+            <button class="btn btn-sm btn-primary me-1">
+              <i class="bi bi-eye"></i> View
+            </button>
+            <button class="btn btn-sm btn-outline-primary">
+              <i class="bi bi-pencil"></i>
+            </button>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+    }
+
+  </div>
+</div>
+
+
+

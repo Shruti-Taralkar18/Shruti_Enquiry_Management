@@ -94,79 +94,84 @@
 
 
 import { Component, inject, OnInit } from '@angular/core';
-import { MasterService } from '../../services/master-service';
 import { FormsModule } from '@angular/forms';
 import { NgFor } from '@angular/common';
+import { MasterService } from '../../services/master-service';
+import { EnquiryModel } from '../../model/class/Enquiry.Model';
 
 @Component({
   selector: 'app-submit-enquiry',
   standalone: true,
   imports: [FormsModule, NgFor],
   templateUrl: './submit-enquiry.html',
-  styleUrls: ['./submit-enquiry.css'], // ✅ fixed
+  styleUrls: ['./submit-enquiry.css'],
 })
 export class SubmitEnquiry implements OnInit {
 
+  // 🔹 Service injection
   masterService = inject(MasterService);
 
+  // 🔹 Dropdown data
   categoryList: any[] = [];
   statusList: any[] = [];
 
-  newEnquiryObj: any = {
-    customerName: '',
-    customerEmail: '',
-    customerPhone: '',
-    message: '',
-    categoryId: null,
-    statusId: null,
-    enquiryType: 'Call',
-    isConverted: false,
-    enquiryDate: '',
-    followUpDate: '',
-    feedback: ''
-  };
+  // 🔹 Form model
+  newEnquiryObj: EnquiryModel = new EnquiryModel();
 
   ngOnInit(): void {
     this.getCategory();
     this.getStatus();
   }
 
-  getCategory() {
+  // ================= CATEGORY =================
+  getCategory(): void {
     this.masterService.getAllCategories().subscribe({
       next: (res: any) => {
-        this.categoryList = res.data || [];
+        this.categoryList = res?.data || [];
       },
-      error: (err) => console.error('Category fetch error:', err)
+      error: (err) => {
+        console.error('Category fetch error:', err);
+      }
     });
   }
 
-  getStatus() {
+  // ================= STATUS =================
+  getStatus(): void {
     this.masterService.getAllStatus().subscribe({
       next: (res: any) => {
-        this.statusList = res.data || [];
+        this.statusList = res?.data || [];
       },
-      error: (err) => console.error('Status fetch error:', err)
+      error: (err) => {
+        console.error('Status fetch error:', err);
+      }
     });
   }
 
-  onSaveEnquiry() {
-    // 🔹 Frontend validation
+  // ================= SAVE ENQUIRY =================
+  onSaveEnquiry(): void {
+
+    // 🔹 Basic validation
     if (!this.newEnquiryObj.categoryId || !this.newEnquiryObj.statusId) {
       alert('Please select Category and Status');
       return;
     }
-    if (!this.newEnquiryObj.customerName || !this.newEnquiryObj.customerEmail || !this.newEnquiryObj.customerPhone) {
+
+    if (
+      !this.newEnquiryObj.customerName ||
+      !this.newEnquiryObj.customerEmail ||
+      !this.newEnquiryObj.customerPhone
+    ) {
       alert('Please fill all required customer details');
       return;
     }
 
-    // 🔹 Payload formatting
+    // 🔹 API payload
     const payload = {
       enquiryId: 0,
       customerName: this.newEnquiryObj.customerName.trim(),
       customerEmail: this.newEnquiryObj.customerEmail.trim(),
       customerPhone: this.newEnquiryObj.customerPhone.trim(),
-      message: this.newEnquiryObj.message.trim(),
+      message: this.newEnquiryObj.message?.trim() || '',
       categoryId: Number(this.newEnquiryObj.categoryId),
       statusId: Number(this.newEnquiryObj.statusId),
       enquiryType: this.newEnquiryObj.enquiryType || 'Call',
@@ -182,33 +187,21 @@ export class SubmitEnquiry implements OnInit {
 
     console.log('FINAL PAYLOAD:', payload);
 
+    // 🔹 API call
     this.masterService.saveNewQuiry(payload).subscribe({
       next: () => {
-        alert('✅ Enquiry Saved Successfully');
+        alert('Enquiry Saved Successfully');
         this.resetForm();
       },
       error: (err) => {
-        console.error('API Error:', err.error);
-        alert('❌ Backend validation failed');
+        console.error('API Error:', err);
+        alert('Backend validation failed');
       }
     });
   }
-resetForm() {
-    this.newEnquiryObj = {
-      customerName: '',
-      customerEmail: '',
-      customerPhone: '',
-      message: '',
-      categoryId: null,
-      statusId: null,
-      enquiryType: 'Call',
-      isConverted: false,
-      enquiryDate: null,
-      followUpDate: null,
-      feedback: ''
-    };
+
+  // ================= RESET =================
+  resetForm(): void {
+    this.newEnquiryObj = new EnquiryModel();
   }
-  
 }
-
-

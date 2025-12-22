@@ -1,10 +1,8 @@
-/* Page background */
 .parent {
   background-color: #f3f4f6;
-  min-height: 100vh;
+  
 }
 
-/* ================= CARD BASE ================= */
 .card-section {
   background: #ffffff;
   border-radius: 10px;
@@ -15,7 +13,6 @@
   margin-bottom: 1.5rem;
 }
 
-/* TOP COLOR LINE */
 .card-section::before {
   content: "";
   position: absolute;
@@ -26,12 +23,10 @@
   background-color: #0d6efd;
 }
 
-/* Card padding */
 .card-body {
   padding: 25px 25px;
 }
 
-/* ================= SECTION TITLE ================= */
 .card-title {
   font-size: 1.15rem;
   font-weight: 600;
@@ -74,7 +69,6 @@
   background-color: #6f42c1;
 }
 
-/* ================= FORM ================= */
 .form-label {
   font-size: 0.95rem;
   font-weight: 500;
@@ -107,15 +101,10 @@ textarea {
   color: #6b7280;
 }
 
-/* ================= ACTION BAR ================= */
 .form-actions {
- 
-
   margin-bottom: 40px;
-  
 }
 
-/* Buttons */
 .btn {
   font-size: 18px;
   padding: 0.5rem 1.1rem;
