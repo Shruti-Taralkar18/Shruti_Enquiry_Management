@@ -93,64 +93,60 @@
 
 
 
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { NgFor } from '@angular/common';
+import { AsyncPipe, NgFor } from '@angular/common';
 import { MasterService } from '../../services/master-service';
 import { EnquiryModel } from '../../model/class/Enquiry.Model';
+import { ICategory, IStatus } from '../../model/interface/Master.Model';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-submit-enquiry',
   standalone: true,
-  imports: [FormsModule, NgFor],
+  imports: [FormsModule, NgFor,AsyncPipe],
   templateUrl: './submit-enquiry.html',
   styleUrls: ['./submit-enquiry.css'],
 })
-export class SubmitEnquiry implements OnInit {
+export class SubmitEnquiry implements OnInit, OnDestroy {
 
-  // 🔹 Service injection
   masterService = inject(MasterService);
-
-  // 🔹 Dropdown data
-  categoryList: any[] = [];
-  statusList: any[] = [];
-
-  // 🔹 Form model
+  // categoryList: ICategory[] = [];
+  // statusList: IStatus[] = [];
+  
+  $statusList:Observable<IStatus[]>=new Observable<IStatus[]>;
+  $categoryList:Observable<ICategory[]>=new Observable<ICategory[]>;
+  subscription!:Subscription;
   newEnquiryObj: EnquiryModel = new EnquiryModel();
 
   ngOnInit(): void {
-    this.getCategory();
-    this.getStatus();
+    // this.getCategory();
+    // this.getStatus();
   }
-
-  // ================= CATEGORY =================
-  getCategory(): void {
-    this.masterService.getAllCategories().subscribe({
-      next: (res: any) => {
-        this.categoryList = res?.data || [];
-      },
-      error: (err) => {
-        console.error('Category fetch error:', err);
-      }
-    });
+  
+  constructor(){
+   this.$categoryList=this.masterService.getAllCategories();
+   this.$statusList=this.masterService.getAllStatus(); 
   }
+ 
+  // getCategory() {
+  //   this.masterService.getAllCategories().subscribe({
+  //     next: (result: any) => {
+  //       this.categoryList = result.data;
+  //     }
+  //   });
+  // }
 
-  // ================= STATUS =================
-  getStatus(): void {
-    this.masterService.getAllStatus().subscribe({
-      next: (res: any) => {
-        this.statusList = res?.data || [];
-      },
-      error: (err) => {
-        console.error('Status fetch error:', err);
-      }
-    });
-  }
+ 
+  // getStatus() {
+  //   this.masterService.getAllStatus().subscribe({
+  //     next: (result: any) => {
+  //       this.statusList = result.data;
+  //     }
+  //   });
+  // }
 
-  // ================= SAVE ENQUIRY =================
   onSaveEnquiry(): void {
-
-    // 🔹 Basic validation
     if (!this.newEnquiryObj.categoryId || !this.newEnquiryObj.statusId) {
       alert('Please select Category and Status');
       return;
@@ -187,8 +183,7 @@ export class SubmitEnquiry implements OnInit {
 
     console.log('FINAL PAYLOAD:', payload);
 
-    // 🔹 API call
-    this.masterService.saveNewQuiry(payload).subscribe({
+    this.subscription=this.masterService.saveNewQuiry(payload).subscribe({
       next: () => {
         alert('Enquiry Saved Successfully');
         this.resetForm();
@@ -199,8 +194,10 @@ export class SubmitEnquiry implements OnInit {
       }
     });
   }
-
-  // ================= RESET =================
+ ngOnDestroy(): void {
+     this.subscription.unsubscribe();
+ }
+ 
   resetForm(): void {
     this.newEnquiryObj = new EnquiryModel();
   }

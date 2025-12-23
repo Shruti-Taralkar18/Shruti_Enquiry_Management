@@ -61,7 +61,7 @@
             <label class="form-label">Category</label>
             <select class="form-select" name="categoryId" required [(ngModel)]="newEnquiryObj.categoryId">
               <option value="null" disabled>Select category</option>
-              <option *ngFor="let item of categoryList" [value]="item.categoryId">{{ item.categoryName }}</option>
+              <option *ngFor="let item of $categoryList | async" [value]="item.categoryId">{{ item.categoryName }}</option>
             </select>
           </div>
 
@@ -70,7 +70,7 @@
             <label class="form-label">Status</label>
             <select class="form-select" name="statusId" required [(ngModel)]="newEnquiryObj.statusId">
               <option value="null" disabled>Select status</option>
-              <option *ngFor="let item of statusList" [value]="item.statusId">{{ item.statusName }}</option>
+              <option *ngFor="let item of $statusList | async" [value]="item.statusId">{{ item.statusName }}</option>
             </select>
           </div>
         
