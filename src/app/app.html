@@ -35,7 +35,7 @@
       </ul>
 
       <div class="d-flex align-items-center gap-2" id="auth-area">
-        <button *ngIf="!loggedIn()" (click)="login()" class="btn btn-primary">
+        <button *ngIf="!loggedIn()" (click)="login()" class="btn btn-primary" routerLink="login">
           Login
         </button>
 

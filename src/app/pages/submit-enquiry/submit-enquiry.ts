@@ -94,17 +94,16 @@
 
 
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { AsyncPipe, NgFor } from '@angular/common';
 import { MasterService } from '../../services/master-service';
 import { EnquiryModel } from '../../model/class/Enquiry.Model';
 import { ICategory, IStatus } from '../../model/interface/Master.Model';
 import { Observable, Subscription } from 'rxjs';
+import { CommonImports } from '../../Global.constant';
 
 @Component({
   selector: 'app-submit-enquiry',
   standalone: true,
-  imports: [FormsModule, NgFor,AsyncPipe],
+  imports: [CommonImports],
   templateUrl: './submit-enquiry.html',
   styleUrls: ['./submit-enquiry.css'],
 })
