@@ -16,31 +16,35 @@
 
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav me-auto">
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/home" routerLinkActive="active">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/submit-enquiry" routerLinkActive="active">
-            Submit Enquiry
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/enquiry-list" routerLinkActive="active">
-            Enquiry List
-          </a>
-        </li>
-      </ul>
+
+  <!-- CUSTOMER (NOT LOGGED IN) -->
+  <li class="nav-item" *ngIf="!loggedIn">
+    <div class="d-flex">
+      <a class="nav-link" routerLink="/submit-enquiry" routerLinkActive="active">
+      Submit Enquiry
+    </a>
+    <a class="nav-link" routerLink="/track-enquiry" routerLinkActive="active">
+      Track Enquiry
+    </a>
+    </div>
+  </li>
+
+  <!-- ADMIN (LOGGED IN) -->
+  <li class="nav-item" *ngIf="loggedIn">
+    <a class="nav-link" routerLink="/enquiry-list" routerLinkActive="active">
+      Enquiry List
+    </a>
+  </li>
+
+</ul>
+
 
       <div class="d-flex align-items-center gap-2" id="auth-area">
-        <button *ngIf="!loggedIn()" (click)="login()" class="btn btn-primary" routerLink="login">
+        <button *ngIf="!loggedIn" (click)="login()" class="btn btn-primary">
           Login
         </button>
 
-        <div *ngIf="loggedIn()" class="d-flex align-items-center gap-2">
-          <span class="text-white fw-semibold">{{ username() }}</span>
+        <div *ngIf="loggedIn" class="d-flex align-items-center gap-2">
           <button (click)="logoff()" class="btn btn-danger">Logoff</button>
         </div>
       </div>

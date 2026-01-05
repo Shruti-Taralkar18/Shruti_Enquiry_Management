@@ -1,0 +1,64 @@
+.parent {
+  background-color: #f3f4f6;
+  height: 88vh;
+}
+
+/* RESULT CARD SPECIAL STYLING */
+.result-card {
+  border-left: 6px solid #0d6efd;
+  transition: all 0.3s ease;
+}
+
+/* HOVER EFFECT */
+.result-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 40px rgba(13, 110, 253, 0.18);
+}
+
+/* STATUS CHIP */
+.status-chip {
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 20px;
+}
+
+.status-chip.pending {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.status-chip.accepted {
+  background-color: #e7f1ff;
+  color: #0d6efd;
+}
+
+.status-chip.rejected {
+  background-color: #f1f3f5;
+  color: #495057;
+}
+
+/* READ ONLY BOX */
+.readonly-box {
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 0.65rem 0.8rem;
+  font-size: 0.95rem;
+  color: #111827;
+}
+
+/* MESSAGE BOX */
+.message-box {
+  background: #ffffff;
+  border-left: 4px solid #0d6efd;
+  padding: 12px;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  color: #111827;
+}
+
+.end-footer{
+    margin-top: 93px;
+    font-size: 18px;
+}

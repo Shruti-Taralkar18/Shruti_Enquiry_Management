@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EnquiryStatus } from './enquiry-status';
+import { TrackEnquiry } from './track-enquiry';
 
-describe('EnquiryStatus', () => {
-  let component: EnquiryStatus;
-  let fixture: ComponentFixture<EnquiryStatus>;
+describe('TrackEnquiry', () => {
+  let component: TrackEnquiry;
+  let fixture: ComponentFixture<TrackEnquiry>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [EnquiryStatus]
+      imports: [TrackEnquiry]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(EnquiryStatus);
+    fixture = TestBed.createComponent(TrackEnquiry);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

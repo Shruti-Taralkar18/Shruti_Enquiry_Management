@@ -1,25 +1,36 @@
-import { Component, signal } from '@angular/core';
-import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { Component } from '@angular/core';
+import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, CommonModule,RouterLink,RouterLinkActive],
+  imports: [RouterOutlet, CommonModule, RouterLink, RouterLinkActive],
   templateUrl: './app.html',
   styleUrls: ['./app.css']
 })
 export class App {
-   title = signal('Enquiry_Management');
 
-   loggedIn = signal(false);
-   username = signal('John Doe');
+  title = 'Enquiry_Management';
 
-  login(){
-    this.loggedIn.set(true);
+  constructor(private router: Router) {}
+
+  // To check login state directly
+  get loggedIn(): boolean {
+    return localStorage.getItem('LoginEmail') !== null;
   }
 
-  logoff(){
-    this.loggedIn.set(false);
+  // // to get username directly
+  // get username(): string {
+  //   return localStorage.getItem('LoginEmail') || '';
+  // }
+
+  login() {
+    this.router.navigateByUrl('/login');
+  }
+
+  logoff() {
+    localStorage.removeItem('LoginEmail');
+    this.router.navigateByUrl('/login');
   }
 }
