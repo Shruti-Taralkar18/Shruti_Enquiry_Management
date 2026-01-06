@@ -7,194 +7,165 @@
       <p>View and manage customer enquiries</p>
     </div>
 
+    <!-- FILTER BAR -->
     <div class="filter-bar">
-      <button class="filter-btn active">All</button>
-      <button class="filter-btn">New</button>
-      <button class="filter-btn">Accepted</button>
-      <button class="filter-btn">Rejected</button>
+
+      <!-- STATUS DROPDOWN -->
+      <div class="dropdown">
+        <button
+          class="btn btn-outline-primary dropdown-toggle filter-dropdown mt-2"
+          data-bs-toggle="dropdown">
+          <i class="bi bi-funnel me-1"></i>
+          {{ selectedStatusLabel }}
+        </button>
+
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" (click)="onStatusSelect('All', 0)">All</a></li>
+          <li><a class="dropdown-item" (click)="onStatusSelect('New', 1)">New</a></li>
+          <li><a class="dropdown-item" (click)="onStatusSelect('In Progress', 2)">In Progress</a></li>
+          <li><a class="dropdown-item" (click)="onStatusSelect('Closed', 3)">Closed</a></li>
+        </ul>
+      </div>
+
+      <!-- SEARCH -->
+      <div class="search-box">
+        <i class="bi bi-search"></i>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Search name / phone"
+          [(ngModel)]="searchText"
+          (input)="onSearchChange()">
+      </div>
+
     </div>
   </div>
 
   <!-- ENQUIRY GRID -->
   <div class="row g-4">
 
-    @for (item of enquiryList; track $index) {
-      <div class="col-md-3">
+    <div class="col-xl-3 col-lg-4 col-md-6" *ngFor="let item of filteredEnquiryList; let i = index">
+      <div class="enquiry-card">
 
-        <div class="enquiry-card">
+        <!-- STATUS PILL -->
+        <div class="status-pill" [ngClass]="getStatusClass(item.statusId)">
+          {{ getStatusLabel(item.statusId) }}
+        </div>
 
-          <!-- STATUS -->
-          <div class="status-pill">
-            {{ item.statusId || 'New Enquiry' }}
+        <!-- CONTENT -->
+        <div class="card-content">
+          <h6 class="customer-name">
+            <i class="bi bi-person-circle me-1"></i>
+            {{ item.customerName }}
+          </h6>
+
+          <div class="phone">
+            <i class="bi bi-telephone me-1"></i>
+            {{ item.customerPhone }}
           </div>
 
-          <!-- CARD CONTENT -->
-          <div class="card-content">
-
-            <h6 class="customer-name">
-              <i class="bi bi-person-circle"></i>
-              {{ item.customerName }}
-            </h6>
-
-            <div class="phone">
-              <i class="bi bi-telephone"></i>
-              {{ item.customerPhone }}
-            </div>
-
-            <div class="message-preview">
-              {{ item.message }}
-            </div>
-
-            <div class="date-info">
-              {{ item.enquiryDate | date:'dd MMM yyyy, hh:mm a' }}
-            </div>
-
+          <div class="message-preview">
+            {{ item.message }}
           </div>
 
-          <!-- ACTIONS -->
-          <div class="action-area">
+          <div class="date-info">
+            {{ item.enquiryDate | date:'dd MMM yyyy, hh:mm a' }}
+          </div>
+        </div>
 
-            <!-- ROW 1 -->
-            <div class="action-row">
+        <!-- ACTIONS -->
+        <div class="action-area">
+
+          <div class="action-row">
+            <button
+              class="btn-view"
+              data-bs-toggle="modal"
+              [attr.data-bs-target]="'#viewModal' + i">
+              <i class="bi bi-eye"></i> View Details
+            </button>
+          </div>
+
+          <div class="action-row secondary">
+            <select
+              class="form-select form-select-sm"
+              [(ngModel)]="item.statusId"
+              (change)="onStatusChange(item)">
+              <option [ngValue]="1">New</option>
+              <option [ngValue]="2">In Progress</option>
+              <option [ngValue]="3">Closed</option>
+            </select>
+
+            <button
+              class="btn-soft delete"
+              (click)="onDeleteEnquiry(item.enquiryId)">
+              <i class="bi bi-trash"></i> Delete
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- VIEW MODAL -->
+      <div class="modal fade" [id]="'viewModal' + i" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+          <div class="modal-content enquiry-modal">
+
+            <div class="modal-header">
+              <h5 class="modal-title">
+                <i class="bi bi-card-text me-2"></i>
+                Enquiry Details
+              </h5>
+              <button class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+
+              <!-- CUSTOMER DETAILS -->
+              <div class="modal-section">
+                <h6 class="section-title">Customer Details</h6>
+                <div class="info-grid">
+                  <div>
+                    <label>Name</label>
+                    <p>{{ item.customerName }}</p>
+                  </div>
+                  <div>
+                    <label>Email</label>
+                    <p>{{ item.customerEmail }}</p>
+                  </div>
+                  <div>
+                    <label>Phone</label>
+                    <p>{{ item.customerPhone }}</p>
+                  </div>
+                  <div>
+                    <label>Enquiry Type</label>
+                    <p>{{ item.enquiryType }}</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- MESSAGE -->
+              <div class="modal-section">
+                <h6 class="section-title">Message</h6>
+                <div class="message-box">
+                  {{ item.message }}
+                </div>
+              </div>
+
+            </div>
+
+            <div class="modal-footer">
               <button
-                class="btn-view"
-                data-bs-toggle="modal"
-                [attr.data-bs-target]="'#viewModal' + $index">
-                <i class="bi bi-eye"></i> View Details
+                class="btn btn-outline-secondary"
+                data-bs-dismiss="modal">
+                Close
               </button>
             </div>
 
-            <!-- ROW 2 -->
-            <div class="action-row secondary">
-              <button class="btn-soft accept">Accept</button>
-              <button class="btn-soft reject">Reject</button>
-              <button
-  class="btn-soft delete"
-  (click)="onDeleteEnquiry(item.enquiryId)">
-  <i class="bi bi-trash"></i> Delete
-</button>
-
-            </div>
-
-          </div>
-
-        </div>
-      </div>
-
-<div
-  class="modal fade"
-  [id]="'viewModal' + $index"
-  tabindex="-1"
-  aria-hidden="true">
-
-  <div class="modal-dialog modal-dialog-centered modal-xl">
-    <div class="modal-content enquiry-modal">
-
-      <!-- HEADER -->
-      <div class="modal-header">
-        <h5 class="modal-title">
-          <i class="bi bi-card-text me-2"></i>
-          Enquiry Details
-        </h5>
-        <button class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-
-      <!-- BODY -->
-      <div class="modal-body">
-
-        <!-- SECTION 1 : CUSTOMER DETAILS -->
-        <div class="modal-section">
-          <h6 class="section-title">1. Customer Details</h6>
-
-          <div class="info-grid">
-            <div>
-              <label>Customer Name</label>
-              <p>{{ item.customerName }}</p>
-            </div>
-
-            <div>
-              <label>Email</label>
-              <p>{{ item.customerEmail }}</p>
-            </div>
-
-            <div>
-              <label>Phone</label>
-              <p>+91 {{ item.customerPhone }}</p>
-            </div>
-
-            <div>
-              <label>Enquiry Type</label>
-              <p>{{ item.enquiryType }}</p>
-            </div>
           </div>
         </div>
-
-        <!-- SECTION 2 : ENQUIRY DETAILS -->
-        <div class="modal-section">
-          <h6 class="section-title">2. Enquiry Details</h6>
-
-          <div class="info-grid">
-            <div>
-              <label>Category</label>
-              <p>{{ item.categoryId }}</p>
-            </div>
-
-            <div>
-              <label>Status</label>
-              <p class="status-text">
-                {{ item.statusId || 'New' }}
-              </p>
-            </div>
-
-            <div>
-              <label>Enquiry Date</label>
-              <p>{{ item.enquiryDate | date:'dd MMM yyyy, hh:mm a' }}</p>
-            </div>
-
-            <div>
-              <label>Follow-up Date</label>
-              <p>
-                {{ item.followUpDate
-                  ? (item.followUpDate | date:'dd MMM yyyy, hh:mm a')
-                  : '—'
-                }}
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <!-- SECTION 3 : MESSAGE -->
-        <div class="modal-section">
-          <h6 class="section-title">3. Customer Message</h6>
-
-          <div class="message-box">
-            {{ item.message }}
-          </div>
-        </div>
-
-        <!-- SECTION 4 : FEEDBACK -->
-        <div class="modal-section">
-          <h6 class="section-title">4. Internal Feedback</h6>
-
-          <div class="feedback-box">
-            {{ item.feedback || 'No feedback added' }}
-          </div>
-        </div>
-
-      </div>
-
-      <!-- FOOTER -->
-      <div class="modal-footer">
-        <button class="btn btn-outline-secondary" data-bs-dismiss="modal">
-          Close
-        </button>
       </div>
 
     </div>
-  </div>
-</div>
-
-    }
 
   </div>
 </div>

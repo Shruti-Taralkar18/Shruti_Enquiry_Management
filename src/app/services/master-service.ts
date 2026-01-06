@@ -33,15 +33,26 @@ export class MasterService {
     );
   }
 
-  getAllEnquiries() {
-    return this.http.get(
-      'https://api.freeprojectapi.com/api/Enquiry/get-enquiries'
-    );
-  }
+ getAllEnquiries() {
+  return this.http
+    .get<any>('https://api.freeprojectapi.com/api/Enquiry/get-enquiries')
+    .pipe(map(res => res.data));   
+}
+
 
   deleteEnquiry(enquiryId: number) {
     return this.http.delete(
       `https://api.freeprojectapi.com/api/Enquiry/delete-enquiry/${enquiryId}`
     );
   }
+  filterEnquiries(filterObj: any) {
+  return this.http.post(
+    'https://api.freeprojectapi.com/api/Enquiry/filter-enquiries',
+    filterObj
+  );
+}
+
+
+
+
 }
