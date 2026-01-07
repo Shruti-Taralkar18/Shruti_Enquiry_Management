@@ -5,11 +5,28 @@
 
         <div class="text-center mb-4">
           <h4 class="mb-0">Welcome</h4>
-          <p class="text-muted">Sign in to continue to your account</p>
+          <p class="text-muted">Sign Up to start your account</p>
         </div>
-        <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+        <form [formGroup]="loginForm">
 
           <div class="mb-3 form-floating">
+            <input
+              class="form-control form-control-lg input-anim"
+              placeholder="name@example.com"
+              formControlName="name"
+              [class.is-invalid]="(name.touched || submitted) && name.invalid">
+
+            <label for="name">Name</label>
+
+            <div class="invalid-feedback d-block"
+                 *ngIf="(name.touched || submitted) && name.invalid">
+              <div *ngIf="name.errors?.['required']">name is required</div>
+              <div *ngIf="name.errors?.['minlength']">
+                Minimum 3 characters required
+              </div>
+            </div>
+          </div>
+            <div class="mb-3 form-floating">
             <input
               type="email"
               id="email"
@@ -26,7 +43,6 @@
               <div *ngIf="email.errors?.['email']">Enter a valid email</div>
             </div>
           </div>
-
           <div class="mb-3 form-floating">
             <input
               type="password"
@@ -53,13 +69,13 @@
             type="submit"
             class="btn btn-primary btn-lg w-100 mb-3 btn-anim"
             [disabled]="loginForm.invalid">
-            Sign in
+            Sign Up
           </button>
 
           <div class="text-center">
-            <p class="text-muted m-0">Don't have an account?</p>
+            <p class="text-muted m-0">Already have an account?</p>
             <div class="mt-2">
-              <a href="#" class="fw-medium" routerLink="/signup">Sign up</a>
+              <a href="#" class="fw-medium" routerLink="/login">Sign In</a>
             </div>
           </div>
 

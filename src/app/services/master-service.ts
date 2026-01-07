@@ -10,6 +10,13 @@ export class MasterService {
 
   constructor(private http: HttpClient) {}
 
+  saveNewQuiry(obj: any) {
+    return this.http.post(
+      'https://api.freeprojectapi.com/api/Enquiry/create-enquiry',
+      obj
+    );
+  }
+
   getAllCategories() {
     return this.http
       .get<IApiResponseModel>(
@@ -26,12 +33,6 @@ export class MasterService {
       .pipe(map((response: IApiResponseModel) => response.data));
   }
 
-  saveNewQuiry(obj: any) {
-    return this.http.post(
-      'https://api.freeprojectapi.com/api/Enquiry/create-enquiry',
-      obj
-    );
-  }
 
  getAllEnquiries() {
   return this.http

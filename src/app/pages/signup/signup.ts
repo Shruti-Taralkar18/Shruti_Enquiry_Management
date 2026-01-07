@@ -1,3 +1,4 @@
+
 import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
@@ -7,10 +8,10 @@ import { NgIf } from '@angular/common';
   selector: 'app-login',
   standalone: true,
   imports: [ReactiveFormsModule, NgIf, RouterLink,RouterOutlet],
-  templateUrl: './login.html',
-  styleUrl: './login.css',
+   templateUrl: './signup.html',
+  styleUrl: './signup.css',
 })
-export class Login {
+export class Signup {
 
   router = inject(Router);
   submitted = false;
@@ -21,6 +22,10 @@ export class Login {
       Validators.required,
       Validators.email
     ]),
+    name: new FormControl('', [
+      Validators.required,
+      Validators.minLength(3)
+    ]),
     password: new FormControl('', [
       Validators.required,
       Validators.minLength(8),
@@ -28,25 +33,10 @@ export class Login {
     ])
   });
 
-  onLogin() {
-    this.submitted = true;
-
-    if (this.loginForm.invalid) {
-      return;
-    }
-
-    const email = this.loginForm.value.email;
-    const password = this.loginForm.value.password;
-
-    if (email === 'admin@gmail.com' && password === 'Admin@123') {
-      localStorage.setItem('LoginEmail', email!);
-      this.router.navigateByUrl('/home');
-    } else {
-      alert('Invalid Credentials');
-    }
-  }
-
   // getters for HTML
+   get name() {
+    return this.loginForm.controls.name;
+  }
   get email() {
     return this.loginForm.controls.email;
   }

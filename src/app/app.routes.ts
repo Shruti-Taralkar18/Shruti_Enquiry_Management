@@ -4,6 +4,7 @@ import { Login } from './pages/login/login';
 import { SubmitEnquiry } from './pages/submit-enquiry/submit-enquiry';
 import { EnquiryList } from './pages/enquiry-list/enquiry-list';
 import { TrackEnquiry } from './pages/track-enquiry/track-enquiry';
+import { Signup } from './pages/signup/signup';
 
 export const routes: Routes = [
   {
@@ -29,6 +30,10 @@ export const routes: Routes = [
   },
   {
     path:'track-enquiry',
-    component:TrackEnquiry
+    component: TrackEnquiry
+  },
+  {
+    path:'signup',
+    component: Signup
   }
 ];

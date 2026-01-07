@@ -1,129 +1,175 @@
 <div class="container-fluid py-4 parent">
 
-  <!-- Header -->
-  <div class="d-flex justify-content-between align-items-center mb-3">
-    <h3 class="m-0">Enquiry Form</h3>
-  </div>
+  <h3 class="mb-3">Enquiry Form</h3>
 
-  <form id="enquiryForm" class="needs-validation" novalidate>
+  <!-- TEMPLATE FORM -->
+  <form #enquiryForm="ngForm" (ngSubmit)="onSaveEnquiry(enquiryForm)">
 
-    <!-- 1. Customer Details -->
+    <!-- 1. CUSTOMER DETAILS -->
     <div class="card card-section">
       <div class="card-body">
         <h5 class="card-title">1. Customer Details</h5>
 
         <div class="row g-3">
+
+          <!-- NAME -->
           <div class="col-md-6">
-            <label class="form-label">Customer Name</label>
-            <input type="text" class="form-control" [(ngModel)]="newEnquiryObj.customerName" name="customerName" required>
-            <div class="invalid-feedback">Please enter customer name.</div>
+            <label class="form-label">Customer Name<span style="color: red;font-size: 19px;">*</span></label>
+            <input
+              type="text"
+              class="form-control"
+              name="customerName"
+              [(ngModel)]="newEnquiryObj.customerName"
+              required
+              #name="ngModel">
+
+            <small class="text-danger" *ngIf="name.invalid && name.touched">
+              Name is required
+            </small>
           </div>
 
+          <!-- EMAIL -->
           <div class="col-md-6">
-            <label class="form-label">Email</label>
-            <input type="email" class="form-control" [(ngModel)]="newEnquiryObj.customerEmail" name="customerEmail" required>
-            <div class="invalid-feedback">Please enter valid email.</div>
+            <label class="form-label">Email<span style="color: red;font-size: 20px;">*</span></label>
+            <input
+              type="email"
+              class="form-control"
+              name="customerEmail"
+              [(ngModel)]="newEnquiryObj.customerEmail"
+              required
+              email
+              #email="ngModel">
+
+            <small class="text-danger" *ngIf="email.invalid && email.touched">
+              Valid email required
+            </small>
           </div>
 
+          <!-- PHONE -->
           <div class="col-md-6">
-            <label class="form-label">Phone</label>
-            <div class="input-group">
-              <span class="input-group-text">+91</span>
-              <input type="tel" class="form-control" [(ngModel)]="newEnquiryObj.customerPhone" name="customerPhone" required>
-            </div>
-            <div class="form-text small-muted">10 digits only</div>
+            <label class="form-label">Phone<span style="color: red;font-size: 20px;">*</span></label>
+            <input
+              type="tel"
+              class="form-control"
+              name="customerPhone"
+              [(ngModel)]="newEnquiryObj.customerPhone"
+              required
+              minlength="10"
+              maxlength="10"
+              #phone="ngModel">
+
+            <small class="text-danger" *ngIf="phone.invalid && phone.touched">
+              Enter 10 digit phone number
+            </small>
           </div>
 
+          <!-- ENQUIRY TYPE -->
           <div class="col-md-6">
             <label class="form-label">Enquiry Type</label>
-            <input type="text" class="form-control" [(ngModel)]="newEnquiryObj.enquiryType" name="enquiryType" placeholder="Call / Walk-in / Online" disabled>
+            <input
+              type="text"
+              class="form-control"
+              name="enquiryType"
+              [(ngModel)]="newEnquiryObj.enquiryType"
+              value="Call"
+              disabled>
           </div>
+
         </div>
       </div>
     </div>
 
-    <!-- 2. Enquiry Details -->
+    <!-- 2. ENQUIRY DETAILS -->
     <div class="card card-section">
       <div class="card-body">
         <h5 class="card-title">2. Enquiry Details</h5>
 
         <div class="row g-3">
+
+          <!-- MESSAGE -->
           <div class="col-12">
-            <label class="form-label">Message</label>
-            <textarea class="form-control" name="message" rows="3" maxlength="500" required [(ngModel)]="newEnquiryObj.message"></textarea>
-            <div class="d-flex justify-content-between mt-1">
-              <span class="small-muted">Max 500 characters</span>
-              <span class="char-count">{{ (newEnquiryObj.message || '').length }} / 500</span>
-            </div>
+            <label class="form-label">Message<span style="color: red;font-size: 20px;">*</span></label>
+            <textarea
+              class="form-control"
+              rows="3"
+              name="message"
+              [(ngModel)]="newEnquiryObj.message"
+              required
+              maxlength="500"
+              #message="ngModel"></textarea>
+
+            <small class="text-danger" *ngIf="message.invalid && message.touched">
+              Message is required
+            </small>
           </div>
 
+          <!-- CATEGORY -->
           <div class="col-md-6">
-            <label class="form-label">Category</label>
-            <select class="form-select" name="categoryId" required [(ngModel)]="newEnquiryObj.categoryId">
-              <option value="null" disabled>Select category</option>
-              <option *ngFor="let item of $categoryList | async" [value]="item.categoryId">{{ item.categoryName }}</option>
+            <label class="form-label">Category<span style="color: red;font-size: 20px;">*</span></label>
+            <select
+              class="form-select"
+              name="categoryId"
+              [(ngModel)]="newEnquiryObj.categoryId"
+              required
+              #category="ngModel">
+
+              <option value="" disabled>Select Category</option>
+              <option *ngFor="let c of $categoryList | async" [value]="c.categoryId">
+                {{ c.categoryName }}
+              </option>
             </select>
+
+            <small class="text-danger" *ngIf="category.invalid && category.touched">
+              Category required
+            </small>
           </div>
 
-        
-           <div class="col-md-6">
-            <label class="form-label">Status</label>
-            <select class="form-select" name="statusId" required [(ngModel)]="newEnquiryObj.statusId">
-              <option value="null" disabled>Select status</option>
-              <option *ngFor="let item of $statusList | async" [value]="item.statusId">{{ item.statusName }}</option>
+          <!-- STATUS -->
+          <div class="col-md-6">
+            <label class="form-label">Status<span style="color: red;font-size: 20px;">*</span></label>
+            <select
+              class="form-select"
+              name="statusId"
+              [(ngModel)]="newEnquiryObj.statusId"
+              required
+              #status="ngModel">
+
+              <option value="" disabled>Select Status</option>
+              <option *ngFor="let s of $statusList | async" [value]="s.statusId">
+                {{ s.statusName }}
+              </option>
             </select>
+
+            <small class="text-danger" *ngIf="status.invalid && status.touched">
+              Status required
+            </small>
           </div>
-        
+
         </div>
       </div>
     </div>
 
-    <!-- 3. Dates -->
-    <!-- <div class="card card-section">
-      <div class="card-body">
-        <h5 class="card-title">3. Dates</h5>
-
-        <div class="row g-3">
-          <div class="col-md-6">
-            <label class="form-label">Enquiry Date</label>
-            <input type="datetime-local" class="form-control" name="enquiryDate" [(ngModel)]="newEnquiryObj.enquiryDate">
-          </div>
-
-          <div class="col-md-6">
-            <label class="form-label">Follow-up Date</label>
-            <input type="datetime-local" class="form-control" name="followUpDate" [(ngModel)]="newEnquiryObj.followUpDate">
-          </div>
-        </div>
-      </div>
-    </div> -->
-
-    <!-- 4. Feedback -->
+    <!-- 3. FEEDBACK -->
     <div class="card card-section">
       <div class="card-body">
-        <h5 class="card-title">3. Feedback & Notes</h5>
-
-        <div class="mb-3">
-          <label class="form-label">Internal Feedback</label>
-          <textarea class="form-control" name="feedback" [(ngModel)]="newEnquiryObj.feedback"></textarea>
-          <!-- <div class="form-text small-muted">Internal use only</div> -->
-        </div>
-
-        <!-- <div class="form-check form-switch">
-          <input class="form-check-input" type="checkbox" name="isConverted" [(ngModel)]="newEnquiryObj.isConverted">
-          <label class="form-check-label">Converted to Customer</label>
-        </div> -->
+        <h5 class="card-title">3. Feedback</h5>
+        <textarea
+          class="form-control"
+          rows="2"
+          name="feedback"
+          [(ngModel)]="newEnquiryObj.feedback"></textarea>
       </div>
     </div>
 
-    <!-- ACTION BUTTONS -->
-    <div class="form-actions">
-      <div class="d-flex justify-content-center gap-3">
-        
-        <button type="button" (click)="onSaveEnquiry()" class="btn btn-success">Save Enquiry</button>
-      </div>
+    <!-- SUBMIT -->
+    <div class="text-center mt-3">
+      <button
+        class="btn btn-success px-4"
+        type="submit"
+        [disabled]="enquiryForm.invalid">
+        Submit Enquiry
+      </button>
     </div>
 
   </form>
-
-  <footer class="text-muted mt-3 small text-center" style="font-size: 18px;">Enquiry Management System</footer>
 </div>
