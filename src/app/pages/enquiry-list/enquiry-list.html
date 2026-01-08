@@ -1,16 +1,11 @@
 <div class="container-fluid enquiry-page">
-
-  <!-- HEADER + FILTER -->
   <div class="page-header">
     <div>
       <h3>Enquiry Management</h3>
       <p>View and manage customer enquiries</p>
     </div>
 
-    <!-- FILTER BAR -->
     <div class="filter-bar">
-
-      <!-- STATUS DROPDOWN -->
       <div class="dropdown">
         <button
           class="btn btn-outline-primary dropdown-toggle filter-dropdown mt-2"
@@ -27,7 +22,6 @@
         </ul>
       </div>
 
-      <!-- SEARCH -->
       <div class="search-box">
         <i class="bi bi-search"></i>
         <input
@@ -41,18 +35,14 @@
     </div>
   </div>
 
-  <!-- ENQUIRY GRID -->
   <div class="row g-4">
 
     <div class="col-xl-3 col-lg-4 col-md-6" *ngFor="let item of filteredEnquiryList; let i = index">
       <div class="enquiry-card">
-
-        <!-- STATUS PILL -->
         <div class="status-pill" [ngClass]="getStatusClass(item.statusId)">
           {{ getStatusLabel(item.statusId) }}
         </div>
 
-        <!-- CONTENT -->
         <div class="card-content">
           <h6 class="customer-name">
             <i class="bi bi-person-circle me-1"></i>
@@ -73,7 +63,6 @@
           </div>
         </div>
 
-        <!-- ACTIONS -->
         <div class="action-area">
 
           <div class="action-row">
@@ -105,7 +94,6 @@
         </div>
       </div>
 
-      <!-- VIEW MODAL -->
       <div class="modal fade" [id]="'viewModal' + i" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered modal-xl">
           <div class="modal-content enquiry-modal">
@@ -120,7 +108,6 @@
 
             <div class="modal-body">
 
-              <!-- CUSTOMER DETAILS -->
               <div class="modal-section">
                 <h6 class="section-title">Customer Details</h6>
                 <div class="info-grid">
@@ -143,7 +130,6 @@
                 </div>
               </div>
 
-              <!-- MESSAGE -->
               <div class="modal-section">
                 <h6 class="section-title">Message</h6>
                 <div class="message-box">

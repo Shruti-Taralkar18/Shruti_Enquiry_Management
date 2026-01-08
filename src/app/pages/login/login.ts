@@ -15,7 +15,6 @@ export class Login {
   router = inject(Router);
   submitted = false;
 
-  // ✅ Reactive Form with validations (NO FormBuilder)
   loginForm = new FormGroup({
     email: new FormControl('', [
       Validators.required,

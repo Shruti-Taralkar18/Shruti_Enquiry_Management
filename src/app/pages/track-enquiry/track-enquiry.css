@@ -24,8 +24,8 @@
 }
 
 .status-chip.pending {
-  background-color: #fff3cd;
-  color: #856404;
+  background: #fdecea;
+    color: #a50e0e;
 }
 
 .status-chip.accepted {

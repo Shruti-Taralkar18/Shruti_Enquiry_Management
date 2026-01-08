@@ -74,7 +74,6 @@ export class EnquiryList implements OnInit {
     });
   }
 
-  // Dropdown status change
   onStatusChange(item: IEnquiry) {
     // Status pill updates automatically via binding
   }
