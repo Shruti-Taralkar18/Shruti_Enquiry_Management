@@ -17,7 +17,6 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav me-auto">
 
-  <!-- CUSTOMER (NOT LOGGED IN) -->
   <li class="nav-item" *ngIf="!loggedIn">
     <div class="d-flex">
       <a class="nav-link" routerLink="/submit-enquiry" routerLinkActive="active">
@@ -29,7 +28,6 @@
     </div>
   </li>
 
-  <!-- ADMIN (LOGGED IN) -->
   <li class="nav-item" *ngIf="loggedIn">
     <a class="nav-link" routerLink="/enquiry-list" routerLinkActive="active">
       Enquiry List
