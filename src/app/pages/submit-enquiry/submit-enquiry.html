@@ -2,17 +2,14 @@
 
   <h3 class="mb-3">Enquiry Form</h3>
 
-  <!-- TEMPLATE FORM -->
   <form #enquiryForm="ngForm" (ngSubmit)="onSaveEnquiry(enquiryForm)">
 
-    <!-- 1. CUSTOMER DETAILS -->
     <div class="card card-section">
       <div class="card-body">
         <h5 class="card-title">1. Customer Details</h5>
 
         <div class="row g-3">
 
-          <!-- NAME -->
           <div class="col-md-6">
             <label class="form-label">Customer Name<span style="color: red;font-size: 19px;">*</span></label>
             <input
@@ -28,7 +25,6 @@
             </small>
           </div>
 
-          <!-- EMAIL -->
           <div class="col-md-6">
             <label class="form-label">Email<span style="color: red;font-size: 20px;">*</span></label>
             <input
@@ -45,7 +41,6 @@
             </small>
           </div>
 
-          <!-- PHONE -->
           <div class="col-md-6">
             <label class="form-label">Phone<span style="color: red;font-size: 20px;">*</span></label>
             <input
@@ -63,7 +58,6 @@
             </small>
           </div>
 
-          <!-- ENQUIRY TYPE -->
           <div class="col-md-6">
             <label class="form-label">Enquiry Type</label>
             <input
@@ -79,14 +73,12 @@
       </div>
     </div>
 
-    <!-- 2. ENQUIRY DETAILS -->
     <div class="card card-section">
       <div class="card-body">
         <h5 class="card-title">2. Enquiry Details</h5>
 
         <div class="row g-3">
 
-          <!-- MESSAGE -->
           <div class="col-12">
             <label class="form-label">Message<span style="color: red;font-size: 20px;">*</span></label>
             <textarea
@@ -103,7 +95,6 @@
             </small>
           </div>
 
-          <!-- CATEGORY -->
           <div class="col-md-6">
             <label class="form-label">Category<span style="color: red;font-size: 20px;">*</span></label>
             <select
@@ -124,7 +115,6 @@
             </small>
           </div>
 
-          <!-- STATUS -->
           <div class="col-md-6">
             <label class="form-label">Status<span style="color: red;font-size: 20px;">*</span></label>
             <select
@@ -149,7 +139,6 @@
       </div>
     </div>
 
-    <!-- 3. FEEDBACK -->
     <div class="card card-section">
       <div class="card-body">
         <h5 class="card-title">3. Feedback</h5>
@@ -161,7 +150,6 @@
       </div>
     </div>
 
-    <!-- SUBMIT -->
     <div class="text-center mt-3">
       <button
         class="btn btn-success px-4"
